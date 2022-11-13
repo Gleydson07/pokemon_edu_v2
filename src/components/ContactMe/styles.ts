@@ -13,6 +13,7 @@ export const Container = styled('div', {
   
   'p': {
     fontFamily: '$Roboto',
+    fontSize: '14px',
     textAlign: 'center',
     fontWeight: 500,
     marginBottom: '8px',
@@ -27,6 +28,9 @@ export const Container = styled('div', {
         },
       },
       dark: {
+        'p': {
+          color: '$gray200',
+        },
         backgroundColor: '$blackOpacity300',
       },
     }
@@ -43,16 +47,30 @@ export const SocialMediasContainer = styled('div', {
   variants: {
     bg: {
       light: {
-        'a': {
-          'svg': {
-            fill: '$gray700',
+        a: {
+          svg: {
+            color: '$blue600',
+          },
+
+          '&:hover': {
+            svg: {
+              transition: 'all 0.2s',
+              color: '$blue800',
+            }
           }
         }
       },
       dark: {
-        'a': {
-          'svg': {
-            fill: '$gray200',
+        a: {
+          svg: {
+            color: '$gray200',
+          },
+
+          '&:hover': {
+            svg: {
+              transition: 'all 0.2s',
+              color: '$blue100',
+            }
           }
         }
       },

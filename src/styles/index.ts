@@ -19,8 +19,10 @@ export const {
       gray700: '#2E2E2E',
       yellow300: '#F2E43B',
       yellow500: '#FFDF30',
+      blue100: '#C8D9E8',
       blue300: '#8EB2D2',
       blue600: '#3A6BBA',
+      blue800: '#09529c',
       orange300: '#F58B35',
       green300: '#68BB5F'
     },

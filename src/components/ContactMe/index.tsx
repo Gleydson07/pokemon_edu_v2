@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-  WhatsappLogo,
-  LinkedinLogo,
-  GithubLogo,
-  GoogleChromeLogo,
-} from 'phosphor-react';
+import { SiLinkedin } from 'react-icons/si';
+import { SiGithub } from 'react-icons/si';
+import { SiWhatsapp } from 'react-icons/si';
+import { SiGooglechrome } from 'react-icons/si';
 
 import {
   Container, SocialMediasContainer
@@ -32,20 +30,23 @@ export const ContactMe:React.FC<ContactMeProps> = ({
     <Container bg={bg}>
       <p>Entre em contato</p>
 
-      <SocialMediasContainer>
+      <SocialMediasContainer bg={bg}>        
         <Link href={whatsapp} target="_blank">
-          <WhatsappLogo size={28} />
+          <SiWhatsapp size={24} />
         </Link>
+
         <Link href={linkedin} target="_blank">
-          <LinkedinLogo size={28} />
+          <SiLinkedin size={24} />
         </Link>
+
         <Link href={github} target="_blank">
-          <GithubLogo size={28} />
+          <SiGithub size={24} />
         </Link>
+
         <Link href={webpage} target="_blank">
-          <GoogleChromeLogo size={28} />
+          <SiGooglechrome size={24} />
         </Link>
-      </SocialMediasContainer>      
+      </SocialMediasContainer>
     </Container>
   )
 }
