@@ -33,3 +33,8 @@ export const LogoWrapper = styled('div', {
     textShadow: '4px -1px 1px #3A6BBA;',
   },
 });
+
+export const ContactMeWrapper = styled('div', {
+  position: 'fixed',
+  bottom: '32px',
+});

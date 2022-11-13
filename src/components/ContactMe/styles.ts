@@ -5,33 +5,74 @@ export const Container = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignContent: 'center',
-  width: '200px',
-  height: '70px',
   borderRadius: '4px',
   backdropFilter: 'blur(16px)',
   padding: '8px',
   
-  'p': {
+  '> p': {
     fontFamily: '$Roboto',
     fontSize: '14px',
     textAlign: 'center',
-    fontWeight: 500,
+    color: '$gray700',
+    fontWeight: 700,
     marginBottom: '8px',
+  },
+  
+  '> strong': {
+    fontFamily: '$Roboto',
+    fontSize: '12px',
+    fontWeight: 400,
+    textAlign: 'center',
+
+    '> a': {
+      fontWeight: 500,
+
+      '&:hover': {
+        transition: 'all 0.2s',
+      }
+    }
   },
 
   variants: {
     bg: {
       light: {
         backgroundColor: '$whiteOpacity300',
-        'p': {
+
+        '> p': {
           color: '$gray700',
         },
+
+        '> strong': {
+          color: '$gray700',
+      
+          '> a': {
+            color: '$blue600',
+      
+            '&:hover': {
+              color: '$blue800',
+            }
+          }
+        },
       },
+
       dark: {
-        'p': {
+        backgroundColor: '$blackOpacity300',
+
+        '> p': {
           color: '$gray200',
         },
-        backgroundColor: '$blackOpacity300',
+
+        '> strong': {
+          color: '$gray200',
+      
+          '> a': {
+            color: '$blue200',
+      
+            '&:hover': {
+              color: '$blue300',
+            }
+          }
+        },
       },
     }
   }
@@ -39,10 +80,11 @@ export const Container = styled('div', {
 
 export const SocialMediasContainer = styled('div', {
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
   height: '100%',
+  marginBottom: '4px',
 
   variants: {
     bg: {

@@ -47,6 +47,8 @@ export const ContactMe:React.FC<ContactMeProps> = ({
           <SiGooglechrome size={24} />
         </Link>
       </SocialMediasContainer>
+
+      <strong>Desenvolvido por <Link href={webpage} target="_blank">gsantos.dev</Link></strong>
     </Container>
   )
 }
