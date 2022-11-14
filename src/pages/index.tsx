@@ -26,10 +26,10 @@ import {
 
 export default function Login() {
   const router = useRouter();
-  const { user, handleGoogleSignIn } = useAuth();
+  const { user, loading, handleGoogleSignIn } = useAuth();
 
   useEffect(() => {
-    if (user) {
+    if (user && !loading) {
       router.push('/dashboard');
     }
   }, [user]);

@@ -10,7 +10,7 @@ export const globalStyles = globalCss({
   'body': {
     fontFamily: "$Roboto",
     backgroundImage: `linear-gradient(
-      to right,
+      to left,
       $yellow300 0,
       $yellow300 25%,
       $blue300 25%,
