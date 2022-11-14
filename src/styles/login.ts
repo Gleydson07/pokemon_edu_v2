@@ -14,6 +14,7 @@ export const LogoWrapper = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   padding: '8px 24px',
+  marginBottom: '8px',
 
   'h1': {
     fontFamily: '$Pokemon',

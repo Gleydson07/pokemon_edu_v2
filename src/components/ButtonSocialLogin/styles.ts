@@ -6,11 +6,12 @@ export const Button = styled('button', {
   justifyContent: 'center',
   alignItems: 'center',
   height: '48px',
-  minWidth: '200px',
+  minWidth: '252px',
   padding: '8px',
   borderRadius: '4px',
   border: 'none',
   cursor: 'pointer',
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 3px 10px;',
 
   '&:hover': {
     transition: 'all 0.2s',
@@ -44,16 +45,16 @@ export const Button = styled('button', {
         color: '$black',
         
         '&:hover': {
-          backgroundColor: '$gray100',
+          backgroundColor: '$gray200',
         }
       },
       microsoft: {
-        backgroundColor: '$white',
-        color: '$blue600',
+        backgroundColor: '$green500',
+        color: '$white',
         
         '&:hover': {
-          backgroundColor: '$gray100',
-          color: '$blue800',
+          backgroundColor: '$green700',
+          color: '$white',
         }
       },
       anonymous: {

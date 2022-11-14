@@ -29,7 +29,9 @@ export const {
       blue600: '#3A6BBA',
       blue800: '#09529c',
       orange300: '#F58B35',
-      green300: '#68BB5F'
+      green300: '#68BB5F',
+      green500: '#00ab34',
+      green700: '#0d8f34',
     },
 
     fonts: {

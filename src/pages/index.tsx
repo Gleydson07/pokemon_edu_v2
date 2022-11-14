@@ -1,10 +1,38 @@
+import { useEffect } from "react";
+import { useRouter } from 'next/router';
 import { ButtonSocialLogin } from "../components/ButtonSocialLogin";
 import { ContactMe } from "../components/ContactMe";
 import { useAuth } from "../hooks/useAuth";
 import { ContactMeWrapper, Container, LogoWrapper } from "../styles/login";
+import { GetServerSideProps } from "next";
+
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
+  setPersistence,
+  browserSessionPersistence,
+} from 'firebase/auth';
+import {
+  ref,
+  set,
+  child,
+  get,
+} from 'firebase/database';
+import {
+  auth,
+  database,
+} from '../api/firebase';
 
 export default function Login() {
-  const { handleGoogleSignIn } = useAuth();
+  const router = useRouter();
+  const { user, handleGoogleSignIn } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [user]);
 
   return (
     <Container>
@@ -17,10 +45,6 @@ export default function Login() {
         loginType="google"
         onClick={handleGoogleSignIn}
       />
-      <ButtonSocialLogin
-        loginType="anonymous"
-        onClick={handleGoogleSignIn}
-      />
 
       <ContactMeWrapper>
         <ContactMe
@@ -28,9 +52,9 @@ export default function Login() {
           github="https://github.com/Gleydson07"
           whatsapp="https://api.whatsapp.com/send?phone=558281114246&text=Ol%C3%A1!!%20%F0%9F%98%80"
           webpage="https://gsantos.dev.br/"
-          bg="dark"
+          bg="light"
         />
       </ContactMeWrapper>
     </Container>
   )
-}
+};

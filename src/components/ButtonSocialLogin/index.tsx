@@ -14,32 +14,31 @@ interface ButtonSocialLoginProps extends ButtonHTMLAttributes<HTMLButtonElement>
   loginType: buttonType,
 }
 
+const settings = {
+  google: {
+    title: "Entrar com Google",
+    icon: <CgGoogle size={24}/>,
+  },
+  apple: {
+    title: "Entrar com Apple",
+    icon: <SiApple size={24}/>,
+  },
+  microsoft: {
+    title: "Entrar com Microsoft",
+    icon: <TfiMicrosoftAlt size={24}/>,
+  },
+  anonymous: {
+    title: "Visitante",
+    icon: <RiUserFill size={24}/>,
+  }
+}
+
 export const ButtonSocialLogin:React.FC<ButtonSocialLoginProps> = ({
   loginType,
-}) => {
-  const settings = {
-    google: {
-      title: "Entrar com Google",
-      icon: <CgGoogle size={24}/>,
-    },
-    apple: {
-      title: "Entrar com Apple",
-      icon: <SiApple size={24}/>,
-    },
-    microsoft: {
-      title: "Entrar com Microsoft",
-      icon: <TfiMicrosoftAlt size={24}/>,
-    },
-    anonymous: {
-      title: "Visitante",
-      icon: <RiUserFill size={24}/>,
-    }
-  }
-
-  return (
-    <Button loginType={loginType}>
-      <small>{settings[loginType].icon}</small>
-      <strong>{settings[loginType].title}</strong>
-    </Button>
-  )
-}
+  ...props
+}) => (
+  <Button loginType={loginType} {...props}>
+    <small>{settings[loginType].icon}</small>
+    <strong>{settings[loginType].title}</strong>
+  </Button>
+)
