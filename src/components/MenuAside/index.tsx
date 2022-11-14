@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useAuth } from '../../hooks/useAuth';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { IoMdExit } from 'react-icons/io';
 import { PlayerRanking } from '../PlayerRanking';
 import laurelsSvg from '../../assets/svgs/laurels.svg';
 
@@ -11,6 +12,7 @@ import {
   GameInfo,
   LifeStatus,
   RankingPosition,
+  SignOut,
   UserInfo,
 } from './styles';
 import Image from 'next/image';
@@ -94,7 +96,7 @@ const playerList = [
 ]
 
 export const MenuAside:React.FC = () => {
-  const { user } = useAuth();
+  const { user, handleGoogleSignOut } = useAuth();
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
   const nameSplited = user.name.split(" ");
@@ -142,7 +144,6 @@ export const MenuAside:React.FC = () => {
       </UserInfo>
 
       <GameInfo>
-
         <RankingPosition>
           <BlockInfo>
             <small>Pontuação atual:</small>
@@ -160,6 +161,11 @@ export const MenuAside:React.FC = () => {
         playerList={playerList}
         myId={user.id}
       />
+
+      <SignOut onClick={handleGoogleSignOut}>
+        Sair
+        <IoMdExit size={18}/>
+      </SignOut>
     </Container>
   )
 }

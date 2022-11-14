@@ -1,22 +1,20 @@
 import { styled } from '../../styles';
 
 export const Container = styled('ul', {
-
 });
 
 export const HeaderList = styled('div', {
   display: 'grid',
   gridTemplateColumns: '32px 155px 53px',
   backgroundColor: '$gray100',
-  marginTop: '24px',
   marginBottom: '2px',
 
   '> strong': {
     display: 'block',
     textAlign: 'center',
     alignItems: 'center',
-    padding: '2px 8px',
-    margin: '4px 0',
+    padding: '4px 8px',
+    margin: 'auto 0',
     fontWeight: 500,
     fontSize: '12px',
     color: '$gray700',
@@ -30,6 +28,11 @@ export const HeaderList = styled('div', {
     borderRight: '1px solid',
     borderColor: '$gray400',
   },
+});
+
+export const BodyList = styled('div', {
+  height: 'calc(100vh - 390px)',
+  overflow: 'auto',
 });
 
 export const Player = styled('li', {
@@ -62,7 +65,8 @@ export const Player = styled('li', {
 
   'small:not(:first-child)': {
     display: 'flex',
-    textAlign: 'left',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     padding: '0 8px',
     borderRight: '1px solid',
     borderColor: '$gray400',
@@ -95,23 +99,5 @@ export const Player = styled('li', {
 
       false: {}
     }
-  }
-});
-
-export const SignOut = styled('button', {
-  position: 'fixed',
-  bottom: 0,
-  width: '100%',
-  height: '52px',
-  border: 'none',
-  backgroundColor: '$whiteOpacity300',
-  fontFamily: '$Roboto',
-  fontWeight: 500,
-  fontSize: '14px',
-  cursor: 'pointer',
-
-  '&:hover': {
-    transition: 'all 0.2s',
-    backgroundColor: '$whiteOpacity400',
   }
 });

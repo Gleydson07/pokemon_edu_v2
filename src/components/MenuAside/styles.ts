@@ -1,6 +1,7 @@
 import { styled } from '../../styles';
 
 export const Container = styled('aside', {
+  position: 'fixed',
   display: 'flex',
   flexDirection: 'column',
   width: '240px',
@@ -62,13 +63,14 @@ export const GameInfo = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   padding: '0 12px',
+  margin: '20px',
 });
 
 export const LifeStatus = styled('div', {
+  marginTop: '2px',
 });
 
 export const RankingPosition = styled('div', {
-  marginTop: '24px',
 });
 
 export const BlockInfo = styled('div', {
@@ -91,5 +93,31 @@ export const BlockInfo = styled('div', {
     '> span': {
       fontSize: '14px',
     }
+  }
+});
+
+export const SignOut = styled('button', {
+  position: 'fixed',
+  bottom: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '52px',
+  border: 'none',
+  backgroundColor: '$whiteOpacity300',
+  color: '$gray700',
+  fontFamily: '$Roboto',
+  fontWeight: 500,
+  fontSize: '14px',
+  cursor: 'pointer',
+
+  '&:hover': {
+    transition: 'all 0.2s',
+    backgroundColor: '$whiteOpacity400',
+  },
+
+  svg: {
+    marginLeft: '8px',
   }
 });
