@@ -1,5 +1,6 @@
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { MenuAside } from '../../components/MenuAside';
 import { useAuth } from '../../hooks/useAuth';
 
 import {
@@ -10,7 +11,7 @@ interface DashboardProps {
 
 }
 
-export default function Dashboard({}) {  
+export default function Dashboard({}) {
   const { user, loading, handleGoogleSignOut } = useAuth();
   const router = useRouter();
 
@@ -26,13 +27,7 @@ export default function Dashboard({}) {
 
   return (
     <Container>
-      <button onClick={handleGoogleSignOut}>Desconectar</button>
-      <p>Dashboard</p>
-
-      <h1>{user?.name}</h1>
-      <p>{user?.id}</p>
-      <p>{user?.email}</p>
-      {user?.avatar && <img src={user?.avatar} alt=""/>}
+      <MenuAside />
     </Container>
   )
 }

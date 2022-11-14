@@ -11,7 +11,7 @@ export const Button = styled('button', {
   borderRadius: '4px',
   border: 'none',
   cursor: 'pointer',
-  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 3px 10px;',
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 3px 10px',
 
   '&:hover': {
     transition: 'all 0.2s',

@@ -4,25 +4,6 @@ import { ButtonSocialLogin } from "../components/ButtonSocialLogin";
 import { ContactMe } from "../components/ContactMe";
 import { useAuth } from "../hooks/useAuth";
 import { ContactMeWrapper, Container, LogoWrapper } from "../styles/login";
-import { GetServerSideProps } from "next";
-
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  User,
-  setPersistence,
-  browserSessionPersistence,
-} from 'firebase/auth';
-import {
-  ref,
-  set,
-  child,
-  get,
-} from 'firebase/database';
-import {
-  auth,
-  database,
-} from '../api/firebase';
 
 export default function Login() {
   const router = useRouter();

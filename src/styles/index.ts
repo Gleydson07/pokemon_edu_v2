@@ -16,6 +16,7 @@ export const {
       black: '#000000',
       whiteOpacity300: '#FFFFFF70',
       blackOpacity300: '#00000070',
+      blackOpacity500: 'rgba(0, 0, 0, 0.35)',
       gray100: '#F5F5F5',
       gray200: '#E3E3E3',
       gray700: '#2E2E2E',
@@ -32,6 +33,7 @@ export const {
       green300: '#68BB5F',
       green500: '#00ab34',
       green700: '#0d8f34',
+      red500: '#D81719',
     },
 
     fonts: {
