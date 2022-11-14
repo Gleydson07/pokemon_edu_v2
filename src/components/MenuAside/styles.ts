@@ -3,7 +3,7 @@ import { styled } from '../../styles';
 export const Container = styled('aside', {
   display: 'flex',
   flexDirection: 'column',
-  width: '220px',
+  width: '240px',
   height: '100vh',
   backdropFilter: 'blur(16px)',
   backgroundColor: '$whiteOpacity300',
@@ -16,15 +16,30 @@ export const UserInfo = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: '36px',
-  padding: '0 12px',
+  padding: '12px',
+  paddingTop: '32px',
+  background: '$gray100',
 
-  '> img': {
-    borderRadius: '50%',
-    height: '74px',
-    width: '74px',
-    border: '2px solid transparent',
-    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 6px',
+  '> div': {
+    position: 'relative',
+
+    '> img': {
+      borderRadius: '50%',
+      height: '74px',
+      width: '74px',
+      border: '2px solid transparent',
+      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 6px',
+    },
+  
+    '> span': {
+      position: 'fixed',
+      left: '50%',
+      transform: 'translateX(-50%)',
+    }
+  },
+
+  '> small': {
+    marginTop: '-8px',
   },
 
   '> strong': {
@@ -38,7 +53,7 @@ export const UserInfo = styled('div', {
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     textAlign: 'center',
-  }
+  },
 });
 
 export const GameInfo = styled('div', {
@@ -53,7 +68,7 @@ export const LifeStatus = styled('div', {
 });
 
 export const RankingPosition = styled('div', {
-  marginTop: '12px',
+  marginTop: '24px',
 });
 
 export const BlockInfo = styled('div', {

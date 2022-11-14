@@ -6,13 +6,8 @@ import { useAuth } from '../../hooks/useAuth';
 import {
   Container
 } from '../../styles/dashboard';
-
-interface DashboardProps {
-
-}
-
-export default function Dashboard({}) {
-  const { user, loading, handleGoogleSignOut } = useAuth();
+export default function Dashboard() {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

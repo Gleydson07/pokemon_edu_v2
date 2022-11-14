@@ -50,6 +50,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     const provider = new GoogleAuthProvider();    
     signInWithPopup(auth, provider)
     .then((response) => {
+      console.log({response})
       const userDatabase:User = response.user;
       const user = {
         id: userDatabase.uid,
