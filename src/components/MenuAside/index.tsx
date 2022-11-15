@@ -5,6 +5,10 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { IoMdExit } from 'react-icons/io';
 import { PlayerRanking } from '../PlayerRanking';
 import laurelsSvg from '../../assets/svgs/laurels.svg';
+import Avatar from 'react-avatar';
+import { BaseRoutes } from '../../routes/RouteNames';
+import { useNavigate } from 'react-router-dom';
+import userNotFoundSvg from '../../assets/svgs/user-not-found.svg';
 
 import {
   BlockInfo,
@@ -15,9 +19,6 @@ import {
   SignOut,
   UserInfo,
 } from './styles';
-import Avatar from 'react-avatar';
-import { BaseRoutes } from '../../routes/RouteNames';
-import { useNavigate } from 'react-router-dom';
 
 interface MyMedalProps {
   medal: JSX.Element | string,
@@ -41,8 +42,19 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
   const { handleGoogleSignOut, loading } = useAuth();
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
+  const onErrorLogo = (event:any) => {
+    event.target.src = userNotFoundSvg;
+    event.onerror = null;
+  }
+
   const avatarFormatted = user.avatar ? 
-    <img className='avatar-image' src={user.avatar} alt="Foto do jogador" /> : 
+    <img
+      className='avatar-image'
+      src={user.avatar}
+      alt="Foto do usuário"
+      loading='lazy'
+      onError={onErrorLogo}
+    /> : 
     <Avatar name={user.name} size="36px" maxInitials={2} round />
 
   const handleSignOut = () => {
