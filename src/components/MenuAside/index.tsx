@@ -16,6 +16,8 @@ import {
   UserInfo,
 } from './styles';
 import Avatar from 'react-avatar';
+import { BaseRoutes } from '../../routes/RouteNames';
+import { useNavigate } from 'react-router-dom';
 
 interface MyMedalProps {
   medal: JSX.Element | string,
@@ -34,16 +36,22 @@ const medals = [
   <Icon icon="emojione:3rd-place-medal" width="40" height="40" />,
 ]
 
-export const MenuAside:React.FC<MenuAsideProps> = ({
-  players,
-  user,
-}) => {
-  const { handleGoogleSignOut } = useAuth();
+export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
+  const navigate = useNavigate();
+  const { handleGoogleSignOut, loading } = useAuth();
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
   const avatarFormatted = user.avatar ? 
     <img className='avatar-image' src={user.avatar} alt="Foto do jogador" /> : 
     <Avatar name={user.name} size="36px" maxInitials={2} round />
+
+  const handleSignOut = () => {
+    handleGoogleSignOut();
+
+    if (!loading) {
+      navigate(BaseRoutes.home.route);
+    }
+  }
   
   useEffect(() => {
     if (players.length && user.id) {
@@ -118,7 +126,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
         amIOnThePodium={myMedal.amIOnThePodium}
       />
 
-      <SignOut onClick={handleGoogleSignOut}>
+      <SignOut onClick={handleSignOut}>
         Sair
         <IoMdExit size={18}/>
       </SignOut>

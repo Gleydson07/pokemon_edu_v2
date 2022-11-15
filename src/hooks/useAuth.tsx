@@ -77,8 +77,9 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
   const handleGoogleSignOut = async () => {
     setUser({} as UserProps);
+    setLoading(true);
     await auth.signOut();
-    window.location.replace('/');
+    setLoading(false);
   };
 
   const persistSession = () => {  
