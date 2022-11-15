@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState
@@ -52,10 +53,33 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
+  const loadUserExists = (userId: String) => {
+    const dbRef = ref(database);
+    let userExists = false;
+
+    get(child(dbRef, `users/${userId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const user = snapshot.val();
+        if (user.uid) {
+          userExists = true;
+        }
+      } else {
+        userExists = false;
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
+    return userExists;
+  };
+
   const handleGoogleSignIn = () => {
-    const provider = new GoogleAuthProvider();    
+    const provider = new GoogleAuthProvider();
+    const dbRef = ref(database);
+
     signInWithPopup(auth, provider)
-    .then((response) => {
+    .then(async (response) => {
       const userDatabase:User = response.user;
       const user = {
         id: userDatabase.uid,
@@ -67,7 +91,12 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         maxPoints: 0,
       };
 
-      set(ref(database, `users/${user.id}`), { ...user });
+      const userSnapshot = await get(child(dbRef, `users/${user.id}`))
+      const userData = userSnapshot.val();
+      
+      if (!userData?.id) {
+        set(ref(database, `users/${user.id}`), { ...user });
+      }
 
       const userFormatted = formatUser(user);
       setUser(userFormatted);
@@ -110,7 +139,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
     setLoading(false);
     return unsubscribe;
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = persistSession();
