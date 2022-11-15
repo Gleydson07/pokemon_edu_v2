@@ -37,7 +37,7 @@ type AuthProviderProps = {
 }
 
 interface AuthContextProps {
-  user: UserProps,
+  user: UserProps | undefined,
   loading: Boolean,
   setUser: (user: UserProps) =>  void;
   handleGoogleSignIn: () =>  void;
@@ -49,7 +49,7 @@ const MAX_LIFE = 3;
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: AuthProviderProps) => {
-  const [user, setUser] = useState<UserProps>(null);
+  const [user, setUser] = useState<UserProps | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   const handleGoogleSignIn = () => {
@@ -59,9 +59,9 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
       const userDatabase:User = response.user;
       const user = {
         id: userDatabase.uid,
-        name: userDatabase.displayName,
-        email: userDatabase.email,
-        avatar: userDatabase.photoURL,
+        name: userDatabase.displayName!,
+        email: userDatabase.email!,
+        avatar: userDatabase.photoURL || undefined,
         life: MAX_LIFE,
         points: 0,
         maxPoints: 0,
@@ -72,18 +72,19 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
       const userFormatted = formatUser(user);
       setUser(userFormatted);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log({error}));
   };
 
   const handleGoogleSignOut = async () => {
-    setUser(undefined);
+    setUser({} as UserProps);
     await auth.signOut();
     window.location.replace('/');
   };
 
-  useEffect(() => {
-    setLoading(true);
+  const persistSession = () => {  
+    setLoading(true);  
     const dbRef = ref(database);
+
     const unsubscribe = auth.onAuthStateChanged(userDatabase => {
       if(userDatabase){
         const {displayName, photoURL} = userDatabase;
@@ -96,13 +97,22 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
           if (snapshot.exists()) {
             const userFormatted = formatUser(snapshot.val());
             setUser(userFormatted);
+
           }
         }).catch((error) => {
-          console.error(error);
+          console.error({error});
+        }).finally(() => {
+          setLoading(false);
         });
       }
     });
+
     setLoading(false);
+    return unsubscribe;
+  }
+
+  useEffect(() => {
+    const unsubscribe = persistSession();
     
     return () => {
       unsubscribe();
@@ -112,8 +122,8 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   return (
     <AuthContext.Provider value={{
       user,
-      setUser,
       loading,
+      setUser,
       handleGoogleSignIn,
       handleGoogleSignOut,
     }}>

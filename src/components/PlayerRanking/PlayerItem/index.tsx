@@ -30,7 +30,7 @@ export const PlayerItem:React.FC<PlayerItemProps> = ({
 
   return (
     <motion.div layout>
-      <Container me={user.id === id}>
+      <Container me={user?.id === id}>
         <small>{position}</small>
         <div>
           {avatarFormatted}

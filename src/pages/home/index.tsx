@@ -1,17 +1,18 @@
 import { useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useNavigate } from "react-router-dom";
 import { ButtonSocialLogin } from "../../components/ButtonSocialLogin";
 import { ContactMe } from "../../components/ContactMe";
 import { useAuth } from "../../hooks/useAuth";
-import { ContactMeWrapper, Container, LogoWrapper } from "../../styles/login";
+import { BaseRoutes } from "../../routes/RouteNames";
+import { ContactMeWrapper, Container, LogoWrapper } from "./styles";
 
 export default function Home() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { user, loading, handleGoogleSignIn } = useAuth();
 
   useEffect(() => {
     if (user && !loading) {
-      router.push('/dashboard');
+      navigate(BaseRoutes.dashboard.route);
     }
   }, [user]);
 

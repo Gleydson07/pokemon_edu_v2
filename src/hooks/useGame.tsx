@@ -1,81 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth, UserProps } from "./useAuth";
 import { database } from '../api/firebase';
-import {
-  ref,
-  set,
-  child,
-  get,
-  update,
-} from 'firebase/database';
+import { ref, set, child, get, onValue } from 'firebase/database';
 import { formatUser } from '../utils/formatUser';
+
+type updatePoints = {
+  points: number,
+  maxPoints: number,
+}
 
 export function useGame() {
   const { user, setUser } = useAuth();
   const [players, setPlayers] = useState<UserProps[]>([]);
 
-  const handleUpdatePoints = async ({points, maxPoints}) => {
-    set(ref(database, `users/${user.id}`), {
+  const handleUpdatePoints = ({points, maxPoints}: updatePoints) => {
+    set(ref(database, `users/${user?.id}`), {
       points,
       maxPoints
     })
     .then(() => {
-      setUser({...user, points, maxPoints});
+      if (user) {
+        setUser({...user, points, maxPoints});
+      }
     })
     .catch((error) => console.log({error}));
   };
 
-  const loadPlayers = async () => {
-    const dbRef = ref(database);
-    get(child(dbRef, 'users')).then((snapshot) => {
+  const loadPlayers = () => {
+    const playerList = ref(database, 'users');
+    onValue(playerList, (snapshot) => {
       if (snapshot.exists()) {
-        const list:UserProps[] = Object.values(snapshot.val()).map(formatUser);        
+        const list:UserProps[] = Object.values((snapshot.val() as UserProps)).map(formatUser);        
         setPlayers(list.sort((prev, next) => next.maxPoints - prev.maxPoints));
       }
-    }).catch((error) => {
-      console.error(error);
     });
   }
 
-  const sortPlayers = () => {
-    if (players?.length) {
-      setPlayers((prevState) => prevState.sort((prev, next) => next.maxPoints - prev.maxPoints));
-    }
-  };
-
-  const generateAleatoryPoints = () => {
-    const position = Math.round(Math.random() * 10);
-    const maxPoints = Math.round(Math.random() * 1000);
-    const playersIds = players.map(player => player.id);
-
-    let player = players.find(player => player.id === playersIds[position]);
-    const otherPlayers = players.filter(player => player.id !== playersIds[position]);
-    player = {
-      ...player,
-      maxPoints,
-    }
-
-    setPlayers([
-      ...otherPlayers,
-      player
-    ]);
-  };
-
-  useEffect(() => {
-    sortPlayers();
+  const sortPlayers = useCallback(() => {
+    user && setPlayers((prevState) => prevState.sort((prev, next) => next.maxPoints - prev.maxPoints));
   }, [user]);
 
-  useEffect(() => {    
-    console.log('useGame: ', {players})
-  }, [players]);
-  
   useEffect(() => {
-    loadPlayers();
-  }, []);
+    if (user) {
+      sortPlayers()
+      loadPlayers();
+    };
+  }, [user]);
   
   return {
     players,
     handleUpdatePoints,
-    generateAleatoryPoints,
   }
 }

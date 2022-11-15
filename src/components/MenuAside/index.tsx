@@ -15,7 +15,6 @@ import {
   SignOut,
   UserInfo,
 } from './styles';
-import Image from 'next/image';
 import Avatar from 'react-avatar';
 
 interface MyMedalProps {
@@ -42,12 +41,12 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
   const { handleGoogleSignOut } = useAuth();
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
-  const avatarFormatted = user?.avatar ? 
+  const avatarFormatted = user.avatar ? 
     <img className='avatar-image' src={user.avatar} alt="Foto do jogador" /> : 
-    <Avatar name={user?.name} size="36px" maxInitials={2} round />
+    <Avatar name={user.name} size="36px" maxInitials={2} round />
   
   useEffect(() => {
-    if (players?.length && user) {
+    if (players.length && user.id) {
       const myPosition = players[0].id === user.id ? 1 :
       players[1].id === user.id ? 2 :
       players[2].id === user.id ? 3 : 0;
@@ -56,17 +55,16 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
         amIOnThePodium: myPosition > 0 && myPosition <= 3,
         medal: medals[myPosition - 1],
         laurels: myPosition <= 3 && myPosition > 0 ? 
-          <Image
+          <img
             src={laurelsSvg}
             alt="Coroa de louros"
             width={86}
             height={86}
-            priority
           /> 
-          : null
+          : undefined
       })
     }
-  }, [user]);
+  }, [user, players]);
 
   return (
     <Container>
