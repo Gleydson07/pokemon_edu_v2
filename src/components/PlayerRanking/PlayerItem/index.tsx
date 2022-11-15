@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { motion } from 'framer-motion';
+import Avatar from 'react-avatar';
 
 import {
   Container
 } from './styles';
-import Avatar from 'react-avatar';
 
 export interface PlayerItemProps {
   id: string,
@@ -24,9 +24,9 @@ export const PlayerItem:React.FC<PlayerItemProps> = ({
 }) => {
   const {user} = useAuth();
 
-  const avatarFormatted = user?.avatar ? 
-    <img src={user.avatar} alt="Foto do jogador" /> : 
-    <Avatar name={user?.name} size="36px" maxInitials={2} round />
+  const avatarFormatted = avatar ? 
+    <img src={avatar} alt="Foto do jogador" /> : 
+    <Avatar name={avatar} size="36px" maxInitials={2} round />
 
   return (
     <motion.div layout>

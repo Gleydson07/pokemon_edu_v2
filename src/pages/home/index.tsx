@@ -7,7 +7,7 @@ import { ContactMeWrapper, Container, LogoWrapper } from "../../styles/login";
 
 export default function Home() {
   const router = useRouter();
-  const { user, loading, handleGoogleSignIn, handleGoogleSignOut } = useAuth();
+  const { user, loading, handleGoogleSignIn } = useAuth();
 
   useEffect(() => {
     if (user && !loading) {
@@ -25,10 +25,6 @@ export default function Home() {
       <ButtonSocialLogin
         loginType="google"
         onClick={handleGoogleSignIn}
-      />
-      <ButtonSocialLogin
-        loginType="anonymous"
-        onClick={handleGoogleSignOut}
       />
 
       <ContactMeWrapper>

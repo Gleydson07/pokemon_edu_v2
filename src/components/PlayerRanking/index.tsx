@@ -11,23 +11,28 @@ import {
 
 interface PlayerRankingProps {
   playerList: UserProps[],
+  amIOnThePodium: boolean,
 };
 
-export const PlayerRanking:React.FC<PlayerRankingProps> = ({ playerList }: PlayerRankingProps) => {
+export const PlayerRanking:React.FC<PlayerRankingProps> = ({
+  playerList,
+  amIOnThePodium,
+}: PlayerRankingProps) => {
   const {generateAleatoryPoints} = useGame();
+
   if (!playerList?.length) {
     return <></>;
   }
 
   return (
     <Container>
-      <button onClick={generateAleatoryPoints}>GENERATE</button>
+      {/* <button onClick={generateAleatoryPoints}>GENERATE</button> */}
       <HeaderList>
         <strong>#</strong>
         <strong>Usuário</strong>
         <strong>Pts</strong>
       </HeaderList>
-      <BodyList>
+      <BodyList applyHeight={amIOnThePodium}>
         {playerList.map((player, index) => (
           <PlayerItem
             key={player.id}

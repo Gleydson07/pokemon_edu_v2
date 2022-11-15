@@ -31,6 +31,17 @@ export const HeaderList = styled('div', {
 });
 
 export const BodyList = styled('div', {
-  height: 'calc(100vh - 390px)',
   overflow: 'auto',
+  
+  variants: {
+    applyHeight: {
+      true: {
+        height: 'calc(100vh - 420px)',
+      },
+      
+      false: {
+        height: 'calc(100vh - 380px)',
+      }
+    }
+  }
 });

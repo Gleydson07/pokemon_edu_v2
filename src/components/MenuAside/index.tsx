@@ -21,6 +21,7 @@ import Avatar from 'react-avatar';
 interface MyMedalProps {
   medal: JSX.Element | string,
   laurels?: JSX.Element,
+  amIOnThePodium: boolean,
 };
 
 export interface MenuAsideProps {
@@ -42,7 +43,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
   const avatarFormatted = user?.avatar ? 
-    <img src={user.avatar} alt="Foto do jogador" /> : 
+    <img className='avatar-image' src={user.avatar} alt="Foto do jogador" /> : 
     <Avatar name={user?.name} size="36px" maxInitials={2} round />
   
   useEffect(() => {
@@ -52,13 +53,16 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
       players[2].id === user.id ? 3 : 0;
       
       setMyMedal({
+        amIOnThePodium: myPosition > 0 && myPosition <= 3,
         medal: medals[myPosition - 1],
         laurels: myPosition <= 3 && myPosition > 0 ? 
           <Image
             src={laurelsSvg}
             alt="Coroa de louros"
             width={86}
-            height={86}/> 
+            height={86}
+            priority
+          /> 
           : null
       })
     }
@@ -67,12 +71,24 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
   return (
     <Container>
       <UserInfo>
-        <div>
-          {avatarFormatted}
-          <span>{myMedal?.laurels && myMedal.laurels}</span>
+        <div className="avatar-container">
+          <div className="avatar-wrapper">
+            {avatarFormatted}
+          </div>
+
+          {myMedal.medal &&
+            <small className='avatar-medal'>
+              {myMedal.medal}
+            </small>
+          }
+
+          {myMedal.laurels && 
+            <span className='avatar-laurels'>
+              {myMedal.laurels}
+            </span>
+          }
         </div>
-        {myMedal?.medal && <small>{myMedal.medal}</small>}
-        <strong>{user?.name}</strong>
+        <strong>{user.name}</strong>
         
         <LifeStatus>
           <AiFillHeart color="#d81719" size="24px"/>
@@ -85,17 +101,24 @@ export const MenuAside:React.FC<MenuAsideProps> = ({
         <RankingPosition>
           <BlockInfo>
             <small>Pontuação atual:</small>
-            <strong>123 <span>pontos</span></strong>            
+            <strong>{user.points} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
           </BlockInfo>
 
           <BlockInfo>
             <small>Minha posição no ranking:</small>
-            <strong>12 de 37</strong>
+            <strong>
+              {players.findIndex(player => player.id === user.id) + 1}
+              <span> de </span>
+              {players.length}
+            </strong>
           </BlockInfo>
         </RankingPosition>
       </GameInfo>
 
-      <PlayerRanking playerList={players} />
+      <PlayerRanking
+        playerList={players}
+        amIOnThePodium={myMedal.amIOnThePodium}
+      />
 
       <SignOut onClick={handleGoogleSignOut}>
         Sair

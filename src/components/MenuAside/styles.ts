@@ -17,30 +17,40 @@ export const UserInfo = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '12px',
+  padding: '8px',
   paddingTop: '32px',
   background: '$gray100',
 
-  '> div': {
+  '.avatar-container': {
     position: 'relative',
-
-    '> img': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    
+    '.avatar-wrapper': {
       borderRadius: '50%',
       height: '74px',
       width: '74px',
-      border: '2px solid transparent',
-      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 6px',
+      
+      '.avatar-image': {
+        borderRadius: '50%',
+        maxHeight: '74px',
+        minHeight: '74px',
+        minWidth: 'auto',
+        border: '2px solid transparent',
+        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 6px',
+      },
     },
-  
-    '> span': {
+    
+    '.avatar-laurels': {
       position: 'fixed',
       left: '50%',
       transform: 'translateX(-50%)',
-    }
-  },
+    },
 
-  '> small': {
-    marginTop: '-8px',
+    '.avatar-medal': {
+      marginTop: '-4px',
+    },
   },
 
   '> strong': {
@@ -48,7 +58,7 @@ export const UserInfo = styled('div', {
     fontFamily: '$Roboto',
     fontSize: '14px',
     color: '$gray700',
-    marginTop: '12px',
+    marginTop: '8px',
     width: '100%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
