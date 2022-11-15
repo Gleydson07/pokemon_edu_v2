@@ -1,62 +1,43 @@
-import React from 'react';
-import Avatar from 'react-avatar';
+import React, {useState, useEffect} from 'react';
+import { UserProps } from '../../hooks/useAuth';
+import { useGame } from '../../hooks/useGame';
+import { PlayerItem } from './PlayerItem';
 
 import {
   BodyList,
   Container,
   HeaderList,
-  Player,
 } from './styles';
 
-type player = {
-  id: string,
-  name: string,
-  avatar?: string,
-  position: number,
-  points: number,
-}
 interface PlayerRankingProps {
-  playerList: player[],
-  myId: string
+  playerList: UserProps[],
 };
 
-export const PlayerRanking:React.FC<PlayerRankingProps> = ({
-  playerList,
-  myId,
-}: PlayerRankingProps) => {
+export const PlayerRanking:React.FC<PlayerRankingProps> = ({ playerList }: PlayerRankingProps) => {
+  const {generateAleatoryPoints} = useGame();
   if (!playerList?.length) {
     return <></>;
   }
 
   return (
     <Container>
+      <button onClick={generateAleatoryPoints}>GENERATE</button>
       <HeaderList>
         <strong>#</strong>
         <strong>Usuário</strong>
         <strong>Pts</strong>
       </HeaderList>
       <BodyList>
-        {playerList.map(player => {
-          const nameSplited = player.name.split(" ");
-          const nameFormatted = nameSplited[1]?.length <= 3 ?
-            [nameSplited[0], nameSplited[1], nameSplited[2]].join(' ') :
-            [nameSplited[0], nameSplited[1]].join(' ');
-
-          const avatarFormatted = player.avatar ? 
-            <img src={player.avatar} alt="Foto do jogador" /> : 
-            <Avatar name={player.name} size="36px" maxInitials={2} round />
-
-          return (
-            <Player key={player.id} me={myId === player.id}>
-              <small>{player.position}</small>
-              <div>
-                {avatarFormatted}
-              </div>
-              <small>{nameFormatted}</small>
-              <strong>{player.points}</strong>
-            </Player>
-          )
-        })}
+        {playerList.map((player, index) => (
+          <PlayerItem
+            key={player.id}
+            id={player.id}
+            name={player.name}
+            avatar={player.avatar}
+            maxPoints={player.maxPoints}
+            position={index + 1}
+          />
+        ))}
       </BodyList>
     </Container>
   )

@@ -20,12 +20,15 @@ import {
   auth,
   database,
 } from '../api/firebase';
+import { formatUser } from "../utils/formatUser";
 
-
-interface UserProps {
+export interface UserProps {
   id: string,
   name: string,
   email: string,
+  life: number,
+  points: number,
+  maxPoints: number,
   avatar?: string,
 }
 
@@ -36,9 +39,12 @@ type AuthProviderProps = {
 interface AuthContextProps {
   user: UserProps,
   loading: Boolean,
+  setUser: (user: UserProps) =>  void;
   handleGoogleSignIn: () =>  void;
   handleGoogleSignOut: () =>  void;
 }
+
+const MAX_LIFE = 3;
 
 export const AuthContext = createContext({} as AuthContextProps);
 
@@ -50,44 +56,50 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     const provider = new GoogleAuthProvider();    
     signInWithPopup(auth, provider)
     .then((response) => {
-      console.log({response})
       const userDatabase:User = response.user;
       const user = {
         id: userDatabase.uid,
         name: userDatabase.displayName,
         email: userDatabase.email,
         avatar: userDatabase.photoURL,
+        life: MAX_LIFE,
+        points: 0,
+        maxPoints: 0,
       };
-      set(ref(database, `users/${user.id}`), { ...user });
-      setUser(user);
 
-      return user;
+      set(ref(database, `users/${user.id}`), { ...user });
+
+      const userFormatted = formatUser(user);
+      setUser(userFormatted);
     })
     .catch((error) => console.log(error));
   };
 
-  async function handleGoogleSignOut(){
+  const handleGoogleSignOut = async () => {
     setUser(undefined);
     await auth.signOut();
     window.location.replace('/');
-}
+  };
 
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = auth.onAuthStateChanged(userData => {
-      if(userData){
-        const {displayName, photoURL} = userData;
+    const dbRef = ref(database);
+    const unsubscribe = auth.onAuthStateChanged(userDatabase => {
+      if(userDatabase){
+        const {displayName, photoURL} = userDatabase;
         if(!displayName || !photoURL){
           throw new Error("Missing information from Google Account");
         }
-        
-        const user = {
-          id: userData.uid,
-          name: userData.displayName,
-          email: userData.email,
-          avatar: userData.photoURL,
-        };
-        setUser(user);
+
+        get(child(dbRef, `users/${userDatabase.uid}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const userFormatted = formatUser(snapshot.val());
+            setUser(userFormatted);
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
       }
     });
     setLoading(false);
@@ -100,6 +112,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   return (
     <AuthContext.Provider value={{
       user,
+      setUser,
       loading,
       handleGoogleSignIn,
       handleGoogleSignOut,
@@ -110,3 +123,4 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 }
 
 export const useAuth = () => useContext(AuthContext);
+
