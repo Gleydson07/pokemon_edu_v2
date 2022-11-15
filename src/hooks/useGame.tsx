@@ -42,7 +42,7 @@ export function useGame() {
 
   useEffect(() => {
     if (user) {
-      sortPlayers()
+      sortPlayers();
       loadPlayers();
     };
   }, [user]);
