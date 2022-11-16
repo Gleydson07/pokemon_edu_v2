@@ -11,10 +11,10 @@ export const Container = styled('div', {
   
   '> p': {
     fontFamily: '$Roboto',
-    fontSize: '14px',
+    fontSize: '12px',
     textAlign: 'center',
     color: '$gray700',
-    fontWeight: 700,
+    fontWeight: 500,
     marginBottom: '8px',
   },
   
