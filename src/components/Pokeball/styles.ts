@@ -46,7 +46,6 @@ export const Container = styled('div', {
     position: 'absolute',
   },
 
-  margin: 'auto',
   width: '150px',
   height: '150px',
   transform: 'translateY(0) rotate(10deg)',
