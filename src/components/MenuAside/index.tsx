@@ -33,16 +33,16 @@ const medals = [
   <Icon icon="emojione:1st-place-medal" width="48" height="48" />,
   <Icon icon="emojione:2nd-place-medal" width="40" height="40" />,
   <Icon icon="emojione:3rd-place-medal" width="40" height="40" />,
-]
+];
 
 export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
   const navigate = useNavigate();
   const { handleGoogleSignOut, loading } = useAuth();
-  const [hasErrorOnProfileImage, setHasErrorOnProfileIMage] = useState<Boolean>(false);
+  const [hasErrorOnUserImage, setHasErrorOnUserImage] = useState<Boolean>(false);
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
   const onErrorLogo = () => {
-    setHasErrorOnProfileIMage(true);
+    setHasErrorOnUserImage(true);
   };
 
   const handleSignOut = () => {
@@ -73,6 +73,19 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
       })
     }
   }, [user, players]);
+
+  const showUserHeart = useCallback(() => {
+    const lifes = [];
+    for (let i = 0; i < 3; i++) {
+      if (user.life > i) {
+        lifes.push(<AiFillHeart key={i} color="#d81719" size="24px"/>);
+      } else {
+        lifes.push(<AiOutlineHeart key={i} color="#d81719" size="24px"/>);
+      }      
+    }
+
+    return lifes;
+  }, [user]);
   
   useEffect(() => {
     isShowLaurelWreath();
@@ -83,7 +96,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
       <UserInfo>
         <div className="avatar-container">
           <div className="avatar-wrapper">
-            {user.avatar && !hasErrorOnProfileImage ?
+            {user.avatar && !hasErrorOnUserImage ?
               <img
                 className='avatar-image'
                 src={user.avatar}
@@ -110,9 +123,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
         <strong>{user.name}</strong>
         
         <LifeStatus>
-          <AiFillHeart color="#d81719" size="24px"/>
-          <AiFillHeart color="#d81719" size="24px"/>
-          <AiOutlineHeart color="#d81719" size="24px"/>
+          {showUserHeart()}
         </LifeStatus>
       </UserInfo>
 
@@ -137,5 +148,5 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
         <IoMdExit size={18}/>
       </SignOut>
     </Container>
-  )
+  );
 }
