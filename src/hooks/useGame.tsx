@@ -14,9 +14,10 @@ export function useGame() {
   const [players, setPlayers] = useState<UserProps[]>([]);
 
   const handleUpdatePoints = ({points, maxPoints}: updatePoints) => {
+    const currentMaxPoints = points > maxPoints ? points : maxPoints;
     set(ref(database, `users/${user?.id}`), {
       points,
-      maxPoints
+      maxPoints: currentMaxPoints
     })
     .then(() => {
       if (user) {
@@ -30,11 +31,12 @@ export function useGame() {
     const playerList = ref(database, 'users');
     onValue(playerList, (snapshot) => {
       if (snapshot.exists()) {
-        const list:UserProps[] = Object.values((snapshot.val() as UserProps)).map(formatUser);        
+        const list:UserProps[] = Object.values((snapshot.val() as UserProps)).map(formatUser);
         setPlayers(list.sort((prev, next) => next.maxPoints - prev.maxPoints));
+        setUser(list.find(player => player?.id === user?.id)!);
       }
     });
-  }
+  };
 
   const sortPlayers = useCallback(() => {
     user && setPlayers((prevState) => prevState.sort((prev, next) => next.maxPoints - prev.maxPoints));
@@ -45,7 +47,7 @@ export function useGame() {
       sortPlayers();
       loadPlayers();
     };
-  }, [user]);
+  }, []);
   
   return {
     players,

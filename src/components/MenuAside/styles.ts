@@ -67,41 +67,43 @@ export const UserInfo = styled('div', {
   },
 });
 
-export const GameInfo = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '0 12px',
-  margin: '20px',
-});
-
 export const LifeStatus = styled('div', {
   marginTop: '2px',
 });
 
-export const RankingPosition = styled('div', {
+export const UserGamePoints = styled('div', {
+  margin: '24px 0',
 });
 
-export const BlockInfo = styled('div', {
-  '& + &': {
-    marginTop: '8px',
+export const PointsContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  backgroundColor: '$gray100',
+  paddingBottom: '4px',
+
+  '> span': {
+    width: '100%',
+    fontFamily: '$Roboto',
+    fontSize: '12px',
+    textAlign: 'center',
+    padding: '2px',
+    backgroundColor: '$blue300',
+    color: '$white',
   },
 
-  '> small': {
-    display: 'block',
-    textAlign: 'center',
-    color: '$gray700',
-  },
-  
   '> strong': {
     display: 'block',
     textAlign: 'center',
     color: '$gray700',
-    fontSize: '20px',
+    fontSize: '16px',
+    lineHeight: 1.35,
+    marginTop: '4px',
 
     '> span': {
       fontSize: '14px',
+      fontWeight: 500,
     }
   }
 });

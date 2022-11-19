@@ -10,11 +10,10 @@ import { BaseRoutes } from '../../routes/RouteNames';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  BlockInfo,
   Container,
-  GameInfo,
   LifeStatus,
-  RankingPosition,
+  PointsContainer,
+  UserGamePoints,
   SignOut,
   UserInfo,
 } from './styles';
@@ -117,23 +116,16 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
         </LifeStatus>
       </UserInfo>
 
-      <GameInfo>
-        <RankingPosition>
-          <BlockInfo>
-            <small>Pontuação atual:</small>
-            <strong>{user.points} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
-          </BlockInfo>
-
-          <BlockInfo>
-            <small>Minha posição no ranking:</small>
-            <strong>
-              {players.findIndex(player => player.id === user.id) + 1}
-              <span> de </span>
-              {players.length}
-            </strong>
-          </BlockInfo>
-        </RankingPosition>
-      </GameInfo>
+      <UserGamePoints>
+        <PointsContainer>
+          <span>Meu recorde</span>
+          <strong>{user.maxPoints} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
+        </PointsContainer>
+        <PointsContainer>
+          <span>Meus pontos atuais</span>
+          <strong>{user.points} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
+        </PointsContainer>
+      </UserGamePoints>
 
       <PlayerRanking
         playerList={players}
