@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Icon } from '@iconify/react';
 import { useAuth, UserProps } from '../../hooks/useAuth';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
@@ -8,7 +8,6 @@ import laurelsSvg from '../../assets/svgs/laurels.svg';
 import Avatar from 'react-avatar';
 import { BaseRoutes } from '../../routes/RouteNames';
 import { useNavigate } from 'react-router-dom';
-import userNotFoundSvg from '../../assets/svgs/user-not-found.svg';
 
 import {
   BlockInfo,
@@ -40,22 +39,12 @@ const medals = [
 export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
   const navigate = useNavigate();
   const { handleGoogleSignOut, loading } = useAuth();
+  const [hasErrorOnProfileImage, setHasErrorOnProfileIMage] = useState<Boolean>(false);
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
-  const onErrorLogo = (event:any) => {
-    event.target.src = userNotFoundSvg;
-    event.onerror = null;
-  }
-
-  const avatarFormatted = user.avatar ? 
-    <img
-      className='avatar-image'
-      src={user.avatar}
-      alt="Foto do usuário"
-      loading='lazy'
-      onError={onErrorLogo}
-    /> : 
-    <Avatar name={user.name} size="36px" maxInitials={2} round />
+  const onErrorLogo = () => {
+    setHasErrorOnProfileIMage(true);
+  };
 
   const handleSignOut = () => {
     handleGoogleSignOut();
@@ -63,9 +52,9 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
     if (!loading) {
       navigate(BaseRoutes.home.route);
     }
-  }
-  
-  useEffect(() => {
+  };
+
+  const isShowLaurelWreath = useCallback(() => {
     if (players.length && user.id) {
       const myPosition = players[0].id === user.id ? 1 :
       players[1].id === user.id ? 2 :
@@ -85,13 +74,26 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
       })
     }
   }, [user, players]);
+  
+  useEffect(() => {
+    isShowLaurelWreath();
+  }, [isShowLaurelWreath]);
 
   return (
     <Container>
       <UserInfo>
         <div className="avatar-container">
           <div className="avatar-wrapper">
-            {avatarFormatted}
+            {user.avatar && !hasErrorOnProfileImage ?
+              <img
+                className='avatar-image'
+                src={user.avatar}
+                alt="Foto do usuário"
+                loading='lazy'
+                onError={onErrorLogo}
+              /> : 
+              <Avatar name={user.name} size="36px" maxInitials={2} round />
+            }
           </div>
 
           {myMedal.medal &&
