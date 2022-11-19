@@ -1,9 +1,10 @@
-import { styled } from '../../styles';
+import {styled} from '../../styles';
 
 export const Container = styled('section', {
+  position: 'relative',
   display: 'flex',
+  flex: 1,
   height: '100vh',
-  maxWidth: '1240px',
   margin: '0 auto',
   padding: '0 16px',
 });

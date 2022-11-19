@@ -42,21 +42,41 @@ const antiWiggle = keyframes({
 });
 
 export const Container = styled('div', {
-  '*': {
-    position: 'absolute',
-  },
-
+  position: 'relative',
   width: '150px',
   height: '150px',
-  transform: 'translateY(0) rotate(10deg)',
-  top: '50%',
-  left: '50%',
+  backgroundColor: 'transparent',
+});
+
+export const Content = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  transformStyle: 'preserve-3d',
+  transition: 'all 0.5s ease',
+  backgroundColor: 'transparent',
+
+  '&.rotate': {
+    transform: 'rotateY(180deg)',
+  },
+});
+
+export const Front = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  transform: 'rotate(10deg)',
   border: '2px solid black',
   borderRadius: '50%',
   backgroundColor: '$white',
   boxShadow: 'inset -10px -10px 0px #e8e3e7',
   overflow: 'hidden',
   cursor: 'pointer',
+  backfaceVisibility: 'hidden',
+
+  '*': {
+    position: 'absolute',
+  },
   
   '.shadow': {
     width: '110%',
@@ -131,5 +151,30 @@ export const Container = styled('div', {
   '&:hover:after': {
     transition: 'all 0.2s',
     animation: `${wiggle} 1s ease-in-out`,
+  },
+});
+
+export const Back = styled('div', {
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  backfaceVisibility: 'hidden',
+  borderRadius: '50%',
+  overflow: 'hidden',
+  transform: 'rotateY(180deg)',
+  backgroundColor: '$whiteOpacity300',
+  backdropFilter: 'blur(16px)',
+  
+  '.content': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    border: '4px solid rgba(255, 0, 0, 0.6)',
   },
 });
