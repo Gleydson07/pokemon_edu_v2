@@ -45,7 +45,9 @@ export const Container = styled('div', {
   position: 'relative',
   width: '150px',
   height: '150px',
+  borderRadius: '50%',
   backgroundColor: 'transparent',
+  margin: '8px',
 });
 
 export const Content = styled('div', {

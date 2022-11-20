@@ -19,6 +19,20 @@ export const PokeballsBoard:React.FC<PokeballsBoardProps> = ({}) => {
       <Pokeball/>
       <Pokeball/>
       <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
+      <Pokeball/>
     </Container>
   )
 }

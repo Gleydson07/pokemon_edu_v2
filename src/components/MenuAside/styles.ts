@@ -1,8 +1,8 @@
 import { styled } from '../../styles';
 
 export const Container = styled('aside', {
-  position: 'fixed',
   display: 'flex',
+  zIndex: 1,
   flexDirection: 'column',
   width: '240px',
   height: '100vh',
@@ -28,9 +28,13 @@ export const UserInfo = styled('div', {
     alignItems: 'center',
     
     '.avatar-wrapper': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: '50%',
       height: '74px',
       width: '74px',
+      backgroundColor: 'red',
       
       '.avatar-image': {
         borderRadius: '50%',

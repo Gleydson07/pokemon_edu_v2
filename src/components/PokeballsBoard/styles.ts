@@ -1,10 +1,11 @@
 import {styled} from '../../styles';
 
-export const Container = styled('section', {
+export const Container = styled('div', {
   position: 'relative',
-  display: 'flex',
-  flex: 1,
-  height: '100vh',
-  margin: '0 auto',
-  padding: '0 16px',
+  display: 'grid',
+  justifyItems: 'center',
+  gridTemplateColumns: 'repeat(5, 1fr)',
+  gridTemplateRows: 'repeat(4, 1fr)',
+  height: 'fit-content',
+  width: '100%',
 });

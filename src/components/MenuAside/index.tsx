@@ -104,7 +104,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
                 loading='lazy'
                 onError={onErrorLogo}
               /> : 
-              <Avatar name={user.name} size="36px" maxInitials={2} round />
+              <Avatar name={user.name} size="74px" maxInitials={2} round />
             }
           </div>
 
