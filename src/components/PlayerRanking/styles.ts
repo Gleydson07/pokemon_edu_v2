@@ -36,11 +36,11 @@ export const BodyList = styled('div', {
   variants: {
     applyHeight: {
       true: {
-        height: 'calc(100vh - 420px)',
+        height: 'calc(100vh - 440px)',
       },
       
       false: {
-        height: 'calc(100vh - 380px)',
+        height: 'calc(100vh - 400px)',
       }
     }
   }

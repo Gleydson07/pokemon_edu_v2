@@ -34,7 +34,6 @@ export const UserInfo = styled('div', {
       borderRadius: '50%',
       height: '74px',
       width: '74px',
-      backgroundColor: 'red',
       
       '.avatar-image': {
         borderRadius: '50%',
