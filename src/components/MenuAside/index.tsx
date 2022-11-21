@@ -37,7 +37,7 @@ const medals = [
 
 export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
   const navigate = useNavigate();
-  const { handleGoogleSignOut, loading } = useAuth();
+  const { handleGoogleSignOut, loadingAuth } = useAuth();
   const [hasErrorOnUserImage, setHasErrorOnUserImage] = useState<Boolean>(false);
   const [myMedal, setMyMedal] = useState<MyMedalProps>({} as MyMedalProps);
 
@@ -48,7 +48,7 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
   const handleSignOut = () => {
     handleGoogleSignOut();
 
-    if (!loading) {
+    if (!loadingAuth) {
       navigate(BaseRoutes.home.route);
     }
   };

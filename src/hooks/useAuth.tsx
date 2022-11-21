@@ -38,7 +38,7 @@ type AuthProviderProps = {
 
 interface AuthContextProps {
   user: UserProps | undefined,
-  loading: Boolean,
+  loadingAuth: Boolean,
   setUser: (user: UserProps) =>  void;
   handleGoogleSignIn: () =>  void;
   handleGoogleSignOut: () =>  void;
@@ -50,7 +50,7 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: AuthProviderProps) => {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(true);
 
   const loadUserExists = (userId: String) => {
     const dbRef = ref(database);
@@ -105,13 +105,13 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
   const handleGoogleSignOut = async () => {
     setUser({} as UserProps);
-    setLoading(true);
+    setLoadingAuth(true);
     await auth.signOut();
-    setLoading(false);
+    setLoadingAuth(false);
   };
 
   const persistSession = () => {  
-    setLoading(true);  
+    setLoadingAuth(true);  
     const dbRef = ref(database);
 
     const unsubscribe = auth.onAuthStateChanged(userDatabase => {
@@ -131,12 +131,12 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         }).catch((error) => {
           console.error({error});
         }).finally(() => {
-          setLoading(false);
+          setLoadingAuth(false);
         });
       }
     });
 
-    setLoading(false);
+    setLoadingAuth(false);
     return unsubscribe;
   };
 
@@ -151,7 +151,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   return (
     <AuthContext.Provider value={{
       user,
-      loading,
+      loadingAuth,
       setUser,
       handleGoogleSignIn,
       handleGoogleSignOut,

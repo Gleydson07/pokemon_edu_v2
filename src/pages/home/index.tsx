@@ -8,10 +8,10 @@ import { ContactMeWrapper, Container, LogoWrapper } from "./styles";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user, loading, handleGoogleSignIn } = useAuth();
+  const { user, loadingAuth, handleGoogleSignIn } = useAuth();
 
   useEffect(() => {
-    if (user && !loading) {
+    if (user && !loadingAuth) {
       navigate(BaseRoutes.dashboard.route);
     }
   }, [user]);

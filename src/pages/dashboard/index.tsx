@@ -6,20 +6,28 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
 import { BaseRoutes } from '../../routes/RouteNames';
-import { Board, Container, Header, Level, LogoWrapper, ProgressContainer, TitlesContainer } from './styles';
+import {
+  Board,
+  Container,
+  Header,
+  Level,
+  LogoWrapper,
+  ProgressContainer,
+  TitlesContainer
+} from './styles';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
-  const { players, pokemons } = useGame();
+  const { user, loadingAuth } = useAuth();
+  const { players, pokemons, loadingGame } = useGame();
 
   useEffect(() => {
-    if ((!user && !loading) || (false)) {
+    if ((!user && !loadingAuth) || (false)) {
       return navigate(BaseRoutes.home.route);
     }
-  }, [user, loading]);
+  }, [user, loadingAuth]);
 
-  if (!user || loading) {
+  if (!user || loadingAuth) {
     return <></>;
   }
 
@@ -44,7 +52,11 @@ export default function Dashboard() {
             <ProgressBar progress={70}/>
           </ProgressContainer>
         </Header>
-        <PokeballsBoard pokemons={pokemons}/>
+
+        {pokemons.length && !loadingGame ? 
+          <PokeballsBoard pokemons={pokemons}/> :
+          <span>Carregando...</span>
+        }
       </Board>
     </Container>
   )

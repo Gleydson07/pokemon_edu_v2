@@ -4,6 +4,7 @@ import { database } from '../api/firebase';
 import { ref, set, child, get, onValue } from 'firebase/database';
 import { formatUser } from '../utils/formatUser';
 import Pokemons, { PokemonProps } from '../api/services/Pokemons';
+import { shuffle } from '../utils/shuffle';
 
 type updatePoints = {
   points: number,
@@ -12,6 +13,7 @@ type updatePoints = {
 
 export function useGame() {
   const { user, setUser } = useAuth();
+  const [loadingGame, setLoadingGame] = useState<Boolean>(false);
   const [players, setPlayers] = useState<UserProps[]>([]);
   const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
 
@@ -45,10 +47,12 @@ export function useGame() {
   }, [user]);
 
   const loadPokemons = async () => {
+    setLoadingGame(true);
     const result = await Pokemons.listAllPokemons();
-
-    if (result?.length)
-      setPokemons(result);
+    if (result?.length) {
+      setPokemons(shuffle(result));
+    }
+    setLoadingGame(false);
   };
 
   useEffect(() => {
@@ -65,6 +69,7 @@ export function useGame() {
   return {
     players,
     pokemons,
+    loadingGame,
     handleUpdatePoints,
   }
 }

@@ -14,7 +14,7 @@ export const PokeballsBoard:React.FC<PokeballsBoardProps> = ({ pokemons }) => {
 
   return (
     <Container>
-      {pokemons.length && pokemons.map(pokemon => (
+      {pokemons.map(pokemon => (
         <Pokeball key={pokemon.id} pokemon={pokemon}/>
       ))}
     </Container>
