@@ -172,11 +172,25 @@ export const Back = styled('div', {
   
   '.content': {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: '100%',
     borderRadius: '50%',
     border: '4px solid rgba(255, 0, 0, 0.6)',
+
+    '.avatar': {
+      maxWidth: '100px',
+      maxHeight: '100px',
+      marginBottom: '4px',
+    },
+
+    '.name': {
+      fontFamily: '$Roboto',
+      fontSize: '14px',
+      fontWeight: 500,
+      textTransform: 'capitalize',
+    }
   },
 });

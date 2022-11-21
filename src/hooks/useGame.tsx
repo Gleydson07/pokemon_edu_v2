@@ -3,6 +3,7 @@ import { useAuth, UserProps } from "./useAuth";
 import { database } from '../api/firebase';
 import { ref, set, child, get, onValue } from 'firebase/database';
 import { formatUser } from '../utils/formatUser';
+import Pokemons, { PokemonProps } from '../api/services/Pokemons';
 
 type updatePoints = {
   points: number,
@@ -12,6 +13,7 @@ type updatePoints = {
 export function useGame() {
   const { user, setUser } = useAuth();
   const [players, setPlayers] = useState<UserProps[]>([]);
+  const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
 
   const handleUpdatePoints = ({points, maxPoints}: updatePoints) => {
     const currentMaxPoints = points > maxPoints ? points : maxPoints;
@@ -42,15 +44,27 @@ export function useGame() {
     user && setPlayers((prevState) => prevState.sort((prev, next) => next.maxPoints - prev.maxPoints));
   }, [user]);
 
+  const loadPokemons = async () => {
+    const result = await Pokemons.listAllPokemons();
+
+    if (result?.length)
+      setPokemons(result);
+  };
+
   useEffect(() => {
     if (user) {
       sortPlayers();
       loadPlayers();
     };
+
+    if (user && !pokemons.length) {
+      loadPokemons();
+    }
   }, []);
   
   return {
     players,
+    pokemons,
     handleUpdatePoints,
   }
 }

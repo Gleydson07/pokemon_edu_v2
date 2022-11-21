@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { PokemonProps } from '../../api/services/Pokemons';
 
 import {
   Back,
@@ -8,10 +9,10 @@ import {
 } from './styles';
 
 interface PokeballProps {
-
+  pokemon: PokemonProps;
 }
 
-export const Pokeball:React.FC<PokeballProps> = ({}) => {
+export const Pokeball:React.FC<PokeballProps> = ({pokemon}) => {
   const pokeballRef = useRef<HTMLDivElement>(null);
   
   const handleClick = () => {
@@ -35,7 +36,8 @@ export const Pokeball:React.FC<PokeballProps> = ({}) => {
         </Front>
         <Back>
           <div className="content">
-            teste
+            <img className='avatar' src={pokemon.avatar} alt="" />
+            <span className='name'>{pokemon.name}</span>
           </div>
         </Back>
       </Content>

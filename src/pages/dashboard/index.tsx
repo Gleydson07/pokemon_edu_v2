@@ -11,7 +11,7 @@ import { Board, Container, Header, Level, LogoWrapper, ProgressContainer, Titles
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const { players } = useGame();
+  const { players, pokemons } = useGame();
 
   useEffect(() => {
     if ((!user && !loading) || (false)) {
@@ -44,7 +44,7 @@ export default function Dashboard() {
             <ProgressBar progress={70}/>
           </ProgressContainer>
         </Header>
-        <PokeballsBoard/>
+        <PokeballsBoard pokemons={pokemons}/>
       </Board>
     </Container>
   )
