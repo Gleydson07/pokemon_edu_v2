@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { PokemonProps } from '../../api/services/Pokemons';
 
 import {
@@ -8,21 +8,29 @@ import {
   Front,
 } from './styles';
 
-interface PokeballProps {
-  pokemon: PokemonProps;
+export interface ChildRef {
+  showPokemon: () => void;
 }
 
-export const Pokeball:React.FC<PokeballProps> = ({pokemon}) => {
+interface PokeballProps {
+  pokemon: PokemonProps;
+  onClick: (id: number) => void;
+}
+
+export const Pokeball = forwardRef<ChildRef, PokeballProps>(({pokemon, onClick}, ref) => {
   const pokeballRef = useRef<HTMLDivElement>(null);
   
-  const handleClick = () => {
-    const pokeball = pokeballRef.current;
-    pokeball?.classList.add('rotate');
-  }
+  useImperativeHandle(ref, () => ({
+    showPokemon: () => {
+      console.log('showPokemon', pokeballRef.current, pokemon)
+      const pokeball = pokeballRef.current;
+      pokeball?.classList.add('rotate');
+    }
+  }));
 
   return (
     <Container>
-      <Content ref={pokeballRef} onClick={handleClick}>
+      <Content ref={pokeballRef} onClick={() => onClick(pokemon.id)}>
         <Front>
           <div className="sparkle"></div>
           <div className="shadow"></div>
@@ -43,4 +51,4 @@ export const Pokeball:React.FC<PokeballProps> = ({pokemon}) => {
       </Content>
     </Container>
   )
-}
+})

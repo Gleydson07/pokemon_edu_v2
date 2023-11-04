@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth, UserProps } from "./useAuth";
+import { useState, useEffect } from 'react';
+import { QuestionProps, useAuth, UserProps } from "./useAuth";
 import { database } from '../api/firebase';
-import { ref, set, child, get, onValue } from 'firebase/database';
+import { ref, set, onValue } from 'firebase/database';
 import { formatUser } from '../utils/formatUser';
 import Pokemons, { PokemonProps } from '../api/services/Pokemons';
 import { shuffle } from '../utils/shuffle';
@@ -15,6 +15,7 @@ export function useGame() {
   const { user, setUser } = useAuth();
   const [loadingGame, setLoadingGame] = useState<Boolean>(false);
   const [players, setPlayers] = useState<UserProps[]>([]);
+  const [questions, setQuestions] = useState<any[]>([]);
   const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
 
   const handleUpdatePoints = ({points, maxPoints}: updatePoints) => {
@@ -42,33 +43,49 @@ export function useGame() {
     });
   };
 
-  const sortPlayers = useCallback(() => {
-    user && setPlayers((prevState) => prevState.sort((prev, next) => next.maxPoints - prev.maxPoints));
-  }, [user]);
+  const loadQuestions = () => {
+    const questionList = ref(database, 'questions');
+    onValue(questionList, (snapshot) => {
+      if (snapshot.exists()) {
+        const list:QuestionProps[] = Object.values((snapshot.val() as QuestionProps));
+        const data = shuffle(list);
+        setQuestions(data.splice(0, 20));
+      }
+    });
+  };
 
   const loadPokemons = async () => {
     setLoadingGame(true);
     const result = await Pokemons.listAllPokemons();
+    let response = [];
     if (result?.length) {
-      setPokemons(shuffle(result));
+      response = shuffle(result);
+      setPokemons(response.map((pokemon, index) => ({...pokemon, questionId: index + 1})));
     }
+
     setLoadingGame(false);
   };
 
   useEffect(() => {
-    if (user) {
-      sortPlayers();
+    if (user?.id) {
       loadPlayers();
-    };
+      
+      if (!questions.length) {
+        loadQuestions();
+      }
 
-    if (user && !pokemons.length) {
-      loadPokemons();
-    }
+      if (!pokemons.length) {
+        (async () => {
+          await loadPokemons();
+        })();
+      };
+    };
   }, []);
-  
+
   return {
     players,
     pokemons,
+    questions,
     loadingGame,
     handleUpdatePoints,
   }

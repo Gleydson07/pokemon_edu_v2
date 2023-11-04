@@ -129,12 +129,12 @@ export const MenuAside:React.FC<MenuAsideProps> = ({ players, user }) => {
 
       <UserGamePoints>
         <PointsContainer>
-          <span>Meu recorde</span>
-          <strong>{user.maxPoints} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
+          <span>Meus pontos</span>
+          <strong>{user.points} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
         </PointsContainer>
         <PointsContainer>
-          <span>Meus pontos atuais</span>
-          <strong>{user.points} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
+          <span>Meu recorde</span>
+          <strong>{user.maxPoints} <span>{user.points !== 1 ? 'pontos' : 'ponto'}</span></strong>            
         </PointsContainer>
       </UserGamePoints>
 

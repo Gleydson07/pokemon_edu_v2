@@ -75,7 +75,7 @@ export const LifeStatus = styled('div', {
 });
 
 export const UserGamePoints = styled('div', {
-  margin: '24px 0',
+  margin: '0 0 12px 0',
 });
 
 export const PointsContainer = styled('div', {
@@ -103,12 +103,27 @@ export const PointsContainer = styled('div', {
     fontSize: '16px',
     lineHeight: 1.35,
     marginTop: '4px',
+    height: '20px',
 
     '> span': {
       fontSize: '14px',
       fontWeight: 500,
     }
-  }
+  },
+
+  '&:first-child': { 
+    '> span': {
+      backgroundColor: '$blue800',
+      color: '$white',
+    },
+    backgroundColor: '$white',
+  },
+
+  '&:last-child': { 
+    '> strong': {
+      fontSize: '14px',
+    },
+  },
 });
 
 export const SignOut = styled('button', {

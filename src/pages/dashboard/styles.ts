@@ -51,23 +51,6 @@ export const LogoWrapper = styled('div', {
   },
 });
 
-export const TitlesContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-});
-
-export const Level = styled('div', {
-  fontFamily: '$ShadowIntoLight',
-  fontSize: '14px',
-  fontWeight: 700,
-  lineHeight: 1.1,
-  color: '$gray700',
-
-  strong: {
-    fontSize: '20px',
-  },
-});
-
 export const ProgressContainer = styled('div', {
   width: '100%',
   padding: '0 24px',

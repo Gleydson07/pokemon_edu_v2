@@ -32,6 +32,19 @@ export interface UserProps {
   avatar?: string,
 }
 
+export interface QuestionProps {
+  id: number,
+  options: {
+    a: string,
+    b: string,
+    c: string,
+    d: string,
+  },
+  correct: string,
+  points: number,
+  question: string,
+}
+
 type AuthProviderProps = {
   children: ReactNode,
 }
@@ -51,27 +64,6 @@ export const AuthContext = createContext({} as AuthContextProps);
 export const AuthProvider = ({children}: AuthProviderProps) => {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
   const [loadingAuth, setLoadingAuth] = useState(true);
-
-  const loadUserExists = (userId: String) => {
-    const dbRef = ref(database);
-    let userExists = false;
-
-    get(child(dbRef, `users/${userId}`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const user = snapshot.val();
-        if (user.uid) {
-          userExists = true;
-        }
-      } else {
-        userExists = false;
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-
-    return userExists;
-  };
 
   const handleGoogleSignIn = () => {
     const provider = new GoogleAuthProvider();
